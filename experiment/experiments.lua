@@ -25,19 +25,19 @@ function Experiment:stop ()
     print("Stopped Experiment",self.name)
 end
 
-function Experiment:add_accelerator (address):
+function Experiment:add_accelerator (address, name)
     local component = require("component")
     local proxy = component.proxy(address)
-    table.insert(self.devices, proxy)
+    self.devices.name = proxy
 end
 
 
 
-strontium_exp = Experiment:new{name = "strontium"}
+fusion_exp = Experiment:new{name = "fusion", info="power generation"}
 
-strontium_exp:start()
-strontium_exp:stop()
+local component = require("component")
+fusion:add_accelerator(component.qmd_accelerator.address, "la1")
 
-strontium_exp.info = "making strontium"
-
-print(strontium_exp.info, strontium_exp.devices)
+print(fusion.devices)
+print(fusion.devices["la1"])
+print(fusion.devices["la1"].getAcceleratorType())
