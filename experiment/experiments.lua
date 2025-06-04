@@ -28,7 +28,7 @@ end
 function Experiment:add_accelerator (address, name)
     local component = require("component")
     local proxy = component.proxy(address)
-    self.devices.name = proxy
+    self.devices[name] = proxy
 end
 
 
@@ -39,5 +39,5 @@ local component = require("component")
 fusion_exp:add_accelerator(component.qmd_accelerator.address, "la1")
 
 print(fusion_exp.devices)
-print(fusion_exp.devices["la1"])
-print(fusion_exp.devices["la1"].getAcceleratorType())
+print(fusion_exp.devices.la1)
+print(fusion_exp.devices.la1.getAcceleratorType())
