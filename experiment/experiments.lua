@@ -1,7 +1,9 @@
 Experiment = { 
     name = "",
     info = "",
-    devices=0,
+    active = false,
+    devices={},
+    settings = {}
 }   
 
 function Experiment:new (o)
@@ -13,19 +15,29 @@ end
 
 function Experiment:start ()
     -- do something
+    self.active = true
     print("Started Experiment",self.name)
 end
 
 function Experiment:stop ()
     -- do something
+    self.active = false
     print("Stopped Experiment",self.name)
 end
+
+function Experiment:add_accelerator (address):
+    local component = require("component")
+    local proxy = component.proxy(address)
+    table.insert(self.devices, proxy)
+end
+
+
 
 strontium_exp = Experiment:new{name = "strontium"}
 
 strontium_exp:start()
 strontium_exp:stop()
 
-strontium_exp:info = "making strontium"
+strontium_exp.info = "making strontium"
 
-print(strontium_exp:info, strontium_exp:devices)
+print(strontium_exp.info, strontium_exp.devices)
