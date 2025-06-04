@@ -1,25 +1,31 @@
-Account = { balance=0,
-            withdraw = function (self, v)
-                             self.balance = self.balance - v
-                           end
-        }   
-    
-function Account:deposit (v)
-    self.balance = self.balance + v
-end
-    
-function Account:new (o)
+Experiment = { 
+    name = "",
+    info = "",
+    devices=0,
+}   
+
+function Experiment:new (o)
       o = o or {}   -- create object if user does not provide one
       setmetatable(o, self)
       self.__index = self
       return o
 end
 
-a = Account:new{balance = 1000}
-a:withdraw(100.00)
+function Experiment:start ()
+    -- do something
+    print("Started Experiment",self.name)
+end
 
-b = Account:new()
-b:deposit(300)
+function Experiment:stop ()
+    -- do something
+    print("Stopped Experiment",self.name)
+end
 
-print(a.balance)
-print(b.balance)
+strontium_exp = Experiment:new{name = "strontium"}
+
+strontium_exp:start()
+strontium_exp:stop()
+
+strontium_exp:info = "making strontium"
+
+print(strontium_exp:info, strontium_exp:devices)
