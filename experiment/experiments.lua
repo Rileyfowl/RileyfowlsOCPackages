@@ -1,3 +1,16 @@
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 Experiment = { 
     name = "",
     info = "",
@@ -52,9 +65,5 @@ end
 
 fusion_exp:add_setting("la1", 5,3)
 
-for i in next, fusion_exp.settings do 
-    for k,v in next, i do 
-        print(k,v)
-    end
-end
+print("fusion_exp settings", dump(fusion_exp.settings))
 
