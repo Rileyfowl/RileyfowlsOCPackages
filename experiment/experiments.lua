@@ -36,8 +36,8 @@ end
 fusion_exp = Experiment:new{name = "fusion", info="power generation"}
 
 local component = require("component")
-fusion:add_accelerator(component.qmd_accelerator.address, "la1")
+fusion_exp:add_accelerator(component.qmd_accelerator.address, "la1")
 
-print(fusion.devices)
-print(fusion.devices["la1"])
-print(fusion.devices["la1"].getAcceleratorType())
+print(fusion_exp.devices)
+print(fusion_exp.devices["la1"])
+print(fusion_exp.devices["la1"].getAcceleratorType())
