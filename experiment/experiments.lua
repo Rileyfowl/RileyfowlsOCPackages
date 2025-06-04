@@ -33,8 +33,9 @@ function Experiment:add_accelerator (address, name)
 end
 
 function Experiment:add_setting(name, energy_percentage, beam_port)
-    self.settings[self.devices[name].energy] = energy_percentage
-    self.settings[self.devices[name].port] = beam_port 
+    self.settings[name] = {}
+    self.settings[name]["energy"] = energy_percentage
+    self.settings[name]["port"] = beam_port 
 end
 
 --create fusion experiment
@@ -54,5 +55,6 @@ fusion_exp:add_setting("la1", 5,3)
 for i in next, fusion_exp.settings do 
     for k,v in next, i do 
         print(k,v)
+    end
 end
 
