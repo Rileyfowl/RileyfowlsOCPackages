@@ -17,6 +17,7 @@ Experiment = {
     info = "",
     active = false,
     devices={},
+
     --key = NAME_OF_DEVICE, value = {energy = ENERGY_PERCENTAGE, port = BEAM_PORT}
     settings = {}
 }
@@ -40,33 +41,45 @@ function Experiment:stop ()
     print("Stopped Experiment",self.name)
 end
 
-function Experiment:add_accelerator (address, name)
+function Experiment:addAccelerator (address, name)
     local component = require("component")
     local proxy = component.proxy(address)
     self.devices[name] = proxy
 end
 
-function Experiment:add_setting(name, energy_percentage, beam_port)
+function Experiment:addAcceleratorByPort(x,y,z, name)
+    local component = require("component")
+    for address, componentType in component.list("qmd_accelerator", true) do
+        local proxy = component.proxy(address)
+        if proxy.isBeamPort(x,y,z) then
+            self.devices[name] = proxy
+            break
+        end
+    end
+end
+
+function Experiment:addSetting(name, energy_percentage, beam_port)
     self.settings[name] = {}
     self.settings[name]["energy"] = energy_percentage
     self.settings[name]["port"] = beam_port 
 end
 
 --create fusion experiment
-local fusion_exp = Experiment:new{name = "fusion", info="power generation"}
+local glueballs = Experiment:new{name = "glueballs", info="Glueball generation"}
 
---add the primary connected accelerator component
-local component = require("component")
-fusion_exp:add_accelerator(component.qmd_accelerator.address, "la1")
+--add the linear accel to get protons up to 5 MeV
+glueballs.addAcceleratorByPort(526, 61,382, "Input LA")
+glueballs.addSetting("Input LA", 100)
+
+--add the synchroton to get protons up energy for spallation
+glueballs.addAcceleratorByPort(534, 61,382, "Spallation Sync")
+glueballs.addSetting("Spallation Sync", 5)
 
 --print all connected devices
-for i in next, fusion_exp.devices do 
+for i in next, glueballs.devices do 
     print(i)
 end
 
---set only the energy percentage
-fusion_exp:add_setting("la1", 50)
-
 -- dump all settings to console
-print("fusion_exp settings", Dump(fusion_exp.settings))
+print("glueballs settings", Dump(glueballs.settings))
 
