@@ -29,7 +29,7 @@ local t = thread.create(function(devices)
             if heatInfo["stored_heat"] > 0.25*heatInfo["heat_capacity"] then
                 proxy.setComputerControlled(true)
                 proxy.setEnergyPercentage(0)
-                print("Emergency shutdown of", Dump(proxy.getOutputParticleInfo()))
+                print("Emergency shutdown of", proxy.address, Dump(proxy.getOutputParticleInfo()))
             end
         end
     end
