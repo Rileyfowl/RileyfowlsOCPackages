@@ -93,12 +93,12 @@ glueballs:addAcceleratorByPort(534, 61,382, "Spallation Sync")
 glueballs:addSetting("Spallation Sync", 5)
 
 --add the main proton synchroton 
-glueballs:addAcceleratorByPort(558, 72,336, "Proton Sync")
-glueballs:addSetting("Proton Sync", 100)
+glueballs:addAcceleratorByPort(558, 73,336, "Proton Sync")
+glueballs:addSetting("Proton Sync", 82)
 
 --add the main antiproton synchroton
-glueballs:addAcceleratorByPort(534, 72,336, "Antiproton Sync")
-glueballs:addSetting("Antiproton Sync", 100)
+glueballs:addAcceleratorByPort(534, 73,336, "Antiproton Sync")
+glueballs:addSetting("Antiproton Sync", 82)
 
 -- dump all settings to console
 print("glueballs settings", Dump(glueballs.settings))
