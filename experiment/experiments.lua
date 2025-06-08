@@ -109,6 +109,19 @@ end
 local event = require("event")
 
 while true do
-  local pulledEvent = event.pullMultiple("touch", "redstone_changed")
-  Dump(pulledEvent)
+  local id, address, side, oldValue, newValue = event.pullMultiple("interrupted", "redstone_changed")
+  if id == "interrupted" then
+    print("soft interrupt, closing")
+    break
+  elseif id=="redstone_changed" then
+    if oldValue==0 and newValue>0 then
+        if not glueballs.active then
+            glueballs:start()
+        end
+    elseif oldValue>0 and newValue==0 then 
+         if glueballs.active then
+            glueballs:stop()
+        end
+    end
+  end
 end
