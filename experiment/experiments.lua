@@ -98,9 +98,9 @@ local redstoneio = component.proxy(component.list("redstone")())
 
 while true do
     if redstoneio.getInput(sides.top)>0 and not glueballs.active then
-        glueballs.start()
+        glueballs:start()
     elseif redstoneio.getInput(sides.top)==0 and glueballs.active then
-        glueballs.stop()
+        glueballs:stop()
         break
     end
 end
