@@ -30,13 +30,20 @@ function Experiment:new (o)
 end
 
 function Experiment:start ()
-    -- do something
+    for name, setting in pairs(self.settings) do
+        local accel_proxy = self.devices[name]
+        accel_proxy.setComputerControlled(true)
+        accel_proxy.setEnergyPercentage(setting["energy"])
+    end 
     self.active = true
     print("Started Experiment",self.name)
 end
 
 function Experiment:stop ()
-    -- do something
+    for name, accel_proxy in pairs(self.devices) do
+        accel_proxy.setEnergyPercentage(0)
+        accel_proxy.setComputerControlled(false)
+    end 
     self.active = false
     print("Stopped Experiment",self.name)
 end
@@ -68,12 +75,12 @@ end
 local glueballs = Experiment:new{name = "glueballs", info="Glueball generation"}
 
 --add the linear accel to get protons up to 5 MeV
-glueballs.addAcceleratorByPort(526, 61,382, "Input LA")
-glueballs.addSetting("Input LA", 100)
+glueballs:addAcceleratorByPort(526, 61,382, "Input LA")
+glueballs:addSetting("Input LA", 100)
 
 --add the synchroton to get protons up energy for spallation
-glueballs.addAcceleratorByPort(534, 61,382, "Spallation Sync")
-glueballs.addSetting("Spallation Sync", 5)
+glueballs:addAcceleratorByPort(534, 61,382, "Spallation Sync")
+glueballs:addSetting("Spallation Sync", 5)
 
 --print all connected devices
 for i in next, glueballs.devices do 
