@@ -91,7 +91,7 @@ end
 -- dump all settings to console
 print("glueballs settings", Dump(glueballs.settings))
 
-
+--[[
 local component = require("component")
 local sides = require("sides")
 local redstoneio = component.proxy(component.list("redstone")())
@@ -103,4 +103,12 @@ while true do
         glueballs:stop()
         break
     end
+end
+--]]
+
+local event = require("event")
+
+while true do
+  local pulledEvent = event.pullMultiple("touch", "redstone_changed")
+  Dump(pulledEvent)
 end
