@@ -68,9 +68,12 @@ function Experiment:addAcceleratorByPort(x,y,z, name)
 end
 
 function Experiment:addSetting(name, energy_percentage, beam_port)
-    self.settings[name] = {}
-    self.settings[name]["energy"] = energy_percentage
-    self.settings[name]["port"] = beam_port 
+    if self.devices[name] then
+        self.settings[name] = {}
+        self.settings[name]["energy"] = energy_percentage
+        self.settings[name]["port"] = beam_port 
+    else
+        print("WARNING:", name, "not in devices. No Settings added.")
 end
 
 
