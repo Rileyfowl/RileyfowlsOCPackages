@@ -74,6 +74,7 @@ function Experiment:addSetting(name, energy_percentage, beam_port)
         self.settings[name]["port"] = beam_port 
     else
         print("WARNING:", name, "not in devices. No Settings added.")
+    end
 end
 
 
