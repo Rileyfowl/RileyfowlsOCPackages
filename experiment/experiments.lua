@@ -56,14 +56,17 @@ end
 
 function Experiment:addAcceleratorByPort(x,y,z, name)
     local component = require("component")
+    local found = false
     for address, componentType in component.list("qmd_accelerator", true) do
         local proxy = component.proxy(address)
         if proxy.isBeamPort(x,y,z) and proxy.isComplete() then
             self.devices[name] = proxy
+            found = true
             break
-        else 
-            print("WARNING: Could not find accelerator", name, x, y, z)
         end
+    end
+    if not found then
+        print("WARNING: Could not find accelerator", name, "at", x, y, z)
     end
 end
 
