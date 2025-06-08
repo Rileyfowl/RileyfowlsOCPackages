@@ -71,6 +71,7 @@ function Experiment:addSetting(name, energy_percentage, beam_port)
     self.settings[name]["port"] = beam_port 
 end
 
+
 --create fusion experiment
 local glueballs = Experiment:new{name = "glueballs", info="Glueball generation"}
 
@@ -90,3 +91,16 @@ end
 -- dump all settings to console
 print("glueballs settings", Dump(glueballs.settings))
 
+
+local component = require("component")
+local sides = require("sides")
+local redstoneio = component.proxy(component.list("redstone")())
+
+while true do
+    if redstoneio.getInput(sides.top)>0 and not glueballs.active then
+        glueballs.start()
+    elseif redstoneio.getInput(sides.top)==0 and glueballs.active then
+        glueballs.stop()
+        break
+    end
+end
